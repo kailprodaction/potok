@@ -57,7 +57,7 @@ export function TaxReserveWidget({ reserve, nextIncome }: TaxReserveWidgetProps)
   const net = nextIncome === null || setAside === null ? null : nextIncome - setAside;
 
   return (
-    <div className="flex flex-col gap-4 px-5 pb-5 sm:px-6 sm:pb-6">
+    <div className="flex flex-col gap-4 px-5 pb-5 pt-4 sm:px-6 sm:pb-6">
       <div>
         <div className="text-2xl font-semibold text-primary">
           {formatMoney(reserve.accrued, reserve.currency)}

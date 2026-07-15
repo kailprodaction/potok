@@ -30,7 +30,7 @@ export function CategoryBreakdown({
   }
 
   return (
-    <div className="px-5 pb-5 sm:px-6 sm:pb-6">
+    <div className="px-5 pb-5 pt-4 sm:px-6 sm:pb-6">
       <ul className="flex flex-col gap-3">
         {items.map((item) => {
           const share = item.amount / total;

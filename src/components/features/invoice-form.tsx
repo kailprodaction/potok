@@ -80,7 +80,7 @@ export function InvoiceForm({ onCreated }: { onCreated?: (invoice: Invoice) => v
     <form
       noValidate
       onSubmit={handleSubmit((values) => mutation.mutateAsync(values).catch(() => undefined))}
-      className="flex flex-col gap-2 px-5 pb-5 sm:px-6 sm:pb-6"
+      className="flex flex-col gap-2 px-5 pb-5 pt-4 sm:px-6 sm:pb-6"
     >
       <Field label="Клиент" error={errors.clientName?.message}>
         {({ controlId, describedBy }) => (
