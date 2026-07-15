@@ -1,0 +1,160 @@
+/**
+ * Дизайн-токены «Потока».
+ *
+ * Единственный источник правды по цвету, радиусам и типографике: компоненты
+ * собираются из этих переменных и никогда не хардкодят hex.
+ *
+ * Палитра графиков валидирована скриптом проверки (полоса светлоты, порог
+ * насыщенности, разделимость при CVD, контраст к поверхности) отдельно для
+ * светлой и тёмной темы. Тёмные значения — не автоматическая инверсия, а
+ * подобранные под тёмную поверхность шаги тех же шкал.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Поверхности */
+  --plane: #f9f9f7;
+  --surface-1: #fcfcfb;
+  --surface-2: #f2f1ed;
+
+  /* Текст */
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  /*
+   * Референсная палитра держит muted на #898781, но это шаг для осей и
+   * гридлайнов. Как текст на светлой поверхности он даёт 3.5:1 — ниже порога
+   * 4.5:1. Здесь muted носит именно текст (даты, подписи, сноски), поэтому шаг
+   * затемнён до проходного: 5.11:1 на светлой, 5.66:1 на тёмной.
+   */
+  --text-muted: #6e6c66;
+
+  /* Линии */
+  --border: rgba(11, 11, 11, 0.1);
+  --gridline: #e1e0d9;
+  --baseline: #c3c2b7;
+
+  /*
+   * Краска данных. Только для меток на графиках — линий, колонок, точек.
+   * Именно эти значения прошли валидатор палитры (полоса светлоты, порог
+   * насыщенности, контраст к поверхности) в каждой из тем.
+   */
+  --series-1: #2a78d6;
+  --series-1-wash: rgba(42, 120, 214, 0.1);
+  --series-1-track: #cde2fb;
+  --series-de-emphasis: #c3c2b7;
+
+  /*
+   * Краска интерфейса — отдельная от краски данных, и не по вкусу, а по
+   * арифметике: белый на --series-1 даёт 4.42:1, то есть кнопка с белой
+   * подписью не проходит порог. Шаг 500 той же синей шкалы держит 5.39:1 под
+   * белым текстом и при этом сам отличим от обеих поверхностей (5.26:1 и
+   * 3.23:1), поэтому годится и как фон кнопки, и как кольцо фокуса.
+   */
+  --accent-solid: #256abf;
+  --accent-text: #256abf;
+
+  /*
+   * Статусы — фиксированы, всегда идут с иконкой и подписью.
+   *
+   * Шаги --status-* предназначены для меток (точка разрыва на графике, иконка).
+   * Для текста у каждого статуса свой шаг: --status-critical на тёмной
+   * поверхности даёт 3.62:1 и как надпись не проходит, поэтому надписи носят
+   * --status-*-text, проверенные и на поверхности, и на своих вошах.
+   */
+  --status-good: #0ca30c;
+  --status-good-text: #006300;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
+  --status-critical-text: #b3261e;
+  --status-good-wash: rgba(12, 163, 12, 0.1);
+  --status-warning-wash: rgba(250, 178, 25, 0.14);
+  --status-critical-wash: rgba(208, 59, 59, 0.1);
+
+  /* Радиусы */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  /* Тени */
+  --shadow-card: 0 1px 2px rgba(11, 11, 11, 0.04);
+  --shadow-pop: 0 8px 24px rgba(11, 11, 11, 0.12);
+
+  /* Типографика — флюидная, mobile-first */
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --text-display: clamp(2.25rem, 1.6rem + 3.2vw, 4rem);
+  --text-h1: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  --text-h2: clamp(1.375rem, 1.2rem + 0.9vw, 1.75rem);
+  --text-hero-figure: clamp(2.5rem, 2rem + 2.4vw, 3.25rem);
+  --text-body: 1rem;
+  --text-sm: 0.875rem;
+  --text-xs: 0.75rem;
+
+  /* Тач-таргет: нижняя граница для интерактива на телефоне */
+  --tap-target: 44px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --plane: #0d0d0d;
+    --surface-1: #1a1a19;
+    --surface-2: #232322;
+
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #95938b;
+
+    --border: rgba(255, 255, 255, 0.1);
+    --gridline: #2c2c2a;
+    --baseline: #383835;
+
+    --series-1: #3987e5;
+    --series-1-wash: rgba(57, 135, 229, 0.14);
+    --series-1-track: #184f95;
+    --series-de-emphasis: #52514e;
+
+    /*
+     * Фон кнопки не меняется между темами: #256abf держит белый текст в обеих и
+     * при этом отделяется от тёмной поверхности (3.23:1). А вот акцентный текст
+     * обязан посветлеть — на тёмном воше #3987e5 даёт лишь 4.05:1.
+     */
+    --accent-solid: #256abf;
+    --accent-text: #6da7ec;
+
+    --status-good-text: #0ca30c;
+    --status-critical-text: #f28b82;
+
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-pop: 0 8px 24px rgba(0, 0, 0, 0.6);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --plane: #0d0d0d;
+  --surface-1: #1a1a19;
+  --surface-2: #232322;
+
+  --text-primary: #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --gridline: #2c2c2a;
+  --baseline: #383835;
+
+  --series-1: #3987e5;
+  --series-1-wash: rgba(57, 135, 229, 0.14);
+  --series-1-track: #184f95;
+  --series-de-emphasis: #52514e;
+
+  --status-good-text: #0ca30c;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-pop: 0 8px 24px rgba(0, 0, 0, 0.6);
+}

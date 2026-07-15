@@ -1,0 +1,88 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+/* Токены → утилиты Tailwind: bg-surface-1, text-secondary, border-hairline и т.д. */
+@theme inline {
+  --color-plane: var(--plane);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+
+  --color-hairline: var(--border);
+  --color-gridline: var(--gridline);
+  --color-baseline: var(--baseline);
+
+  --color-series-1: var(--series-1);
+  --color-series-wash: var(--series-1-wash);
+  --color-series-track: var(--series-1-track);
+
+  --color-accent: var(--accent-solid);
+  --color-accent-text: var(--accent-text);
+
+  --color-good: var(--status-good);
+  --color-good-text: var(--status-good-text);
+  --color-warning: var(--status-warning);
+  --color-serious: var(--status-serious);
+  --color-critical: var(--status-critical);
+  --color-critical-text: var(--status-critical-text);
+  --color-good-wash: var(--status-good-wash);
+  --color-warning-wash: var(--status-warning-wash);
+  --color-critical-wash: var(--status-critical-wash);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+
+  --font-sans: var(--font-sans);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--plane);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Фокус виден всегда и одинаково — навигация с клавиатуры не должна угадываться */
+:focus-visible {
+  outline: 2px solid var(--accent-solid);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Ссылка «сразу к содержимому»: видна только при фокусе */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--surface-1);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
